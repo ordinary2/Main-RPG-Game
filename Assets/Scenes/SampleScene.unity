@@ -150,11 +150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5ac3fc030e195458074a6dab401425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  attackVelocity:
+  - {x: 3, y: 1.5}
+  - {x: 1, y: 2.5}
+  - {x: 2.75, y: 1.75}
+  attackVelocityDuration: 0.1
+  comboResetTime: 1
   moveSpeed: 8
   jumpForce: 12
   wallJumpForce: {x: 6, y: 15}
   inAirMoveMultiplier: 0.65
   wallSlideSlowMultiplier: 0.4
+  dashDuration: 0.25
+  dashSpeed: 20
   groundCheckDistance: 1.4
   wallCheckDistance: 0.4
   whatIsGround:
@@ -169,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 54919380}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: -1.79, z: 0}
+  m_LocalPosition: {x: -2.38, y: -1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -291,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &175572544
 Transform:
   m_ObjectHideFlags: 0
@@ -786,7 +794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1719389967
 Transform:
   m_ObjectHideFlags: 0
@@ -796,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 1719389966}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.38, y: 0.7122, z: 0}
+  m_LocalPosition: {x: -9.18, y: -1.9, z: 0}
   m_LocalScale: {x: 4.0733733, y: 6.476269, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -917,6 +925,7 @@ GameObject:
   - component: {fileID: 2135063663}
   - component: {fileID: 2135063665}
   - component: {fileID: 2135063664}
+  - component: {fileID: 2135063666}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -1019,6 +1028,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2135063666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135063662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a721157cf797643a04dd26c5f5a725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_AnimationTriggers
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
