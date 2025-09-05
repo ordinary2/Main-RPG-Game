@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -10,14 +11,17 @@ public class Entity : MonoBehaviour
     public int facingDir { get; private set; } = 1;
 
     [Header("Collision detection")] 
+    [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallCheckDistance;
-    [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondaryWallCheck;
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
+
+    private bool isKnocked;
+    private Coroutine knockbackCo;
 
     protected virtual void Awake()
     {
@@ -32,38 +36,58 @@ public class Entity : MonoBehaviour
         
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         HandleCollisionDetected();
         stateMachine.UpdateActiveState();
     }
     
-    public void CallAnimationTrigger()
+    public void CurrentStateAnimationTrigger()
     {
-        stateMachine.currentState.CallAnimationTrigger();
+        stateMachine.currentState.AnimationTrigger();
+    }
+
+    public void ReciveKnockback(Vector2 knockback, float duration)
+    {
+        if(knockbackCo != null)
+            StopCoroutine(knockbackCo);
+
+        knockbackCo = StartCoroutine(KnockbackCo(knockback, duration));
+    }
+
+    private IEnumerator KnockbackCo(Vector2 knockBack, float duration)
+    {
+        isKnocked = true;
+        rb.linearVelocity = knockBack;
+        
+        yield return new WaitForSeconds(duration);
+        
+        rb.linearVelocity = Vector2.zero;
+        isKnocked = false;
     }
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
+        if(isKnocked)
+            return;
+        
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
 
-    private void HandleFlip(float xVelocity)
+    public void HandleFlip(float xVelocity)
     {
         if (xVelocity > 0 && facingRight == false)
             Flip();
         else if(xVelocity < 0 && facingRight)
             Flip();
     }
-
     public void Flip()
     {
         transform.Rotate(0, 180, 0);
         facingRight = !facingRight;
         facingDir = facingDir * -1;
     }
-
     private void HandleCollisionDetected()
     {
         groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -78,8 +102,7 @@ public class Entity : MonoBehaviour
         else
             wallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
     }
-
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance));
         Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallCheckDistance * facingDir, 0));
