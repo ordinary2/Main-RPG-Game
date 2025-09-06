@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Entity_Health : MonoBehaviour
+public class Entity_Health : MonoBehaviour , IDamagable
 {
     private Entity_VFX entityVfx;
     private Entity entity;
@@ -51,7 +51,7 @@ public class Entity_Health : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        Debug.Log("Entity died!");
+        entity.EntityDeath();
     }
 
     private Vector2 CalculateKnockback(float damage, Transform damageDealer)
