@@ -132,9 +132,10 @@ GameObject:
   - component: {fileID: 54919383}
   - component: {fileID: 54919384}
   - component: {fileID: 54919389}
-  - component: {fileID: 54919387}
   - component: {fileID: 54919388}
+  - component: {fileID: 54919387}
   - component: {fileID: 54919390}
+  - component: {fileID: 54919391}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -274,8 +275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Entity_VFX
   onDamageMaterial: {fileID: 2100000, guid: 7b11aaf97d905424c9e600eeb52a3665, type: 2}
   onDamageVfxDuration: 0.15
-  hitVfxColor: {r: 0.9254902, g: 0.89411765, b: 0.29411766, a: 1}
+  hitVfxColor: {r: 1, g: 0.94509804, b: 0, a: 1}
   hitVfx: {fileID: 1199390444253856412, guid: efe950305ce4a4b479fdf7ed22e232ac, type: 3}
+  critHitVfx: {fileID: 4406482496636585179, guid: b0d9e3f00d97c2d43a918b35f9145099, type: 3}
+  chillVfx: {r: 0.42352942, g: 0.69803923, b: 1, a: 1}
 --- !u!114 &54919388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +316,9 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  counterRecovery: 0.1
+  defaultDuration: 3
+  chillSlowMultiplier: 0.2
+  counterRecovery: 0.4
 --- !u!114 &54919390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
   maxHealth:
-    baseValue: 100
+    baseValue: 1000
   major:
     strenght:
       baseValue: 0
@@ -336,18 +341,20 @@ MonoBehaviour:
     intelligence:
       baseValue: 0
     vitality:
-      baseValue: 10
+      baseValue: 0
   offense:
     damage:
       baseValue: 10
     critPower:
       baseValue: 0
     critChance:
+      baseValue: 100
+    armorReduction:
       baseValue: 0
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 0
+      baseValue: 10
     lightningDamage:
       baseValue: 0
   defense:
@@ -361,6 +368,18 @@ MonoBehaviour:
       baseValue: 0
     lightningRes:
       baseValue: 0
+--- !u!114 &54919391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54919380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3ccd6a1a554944889d35191cc1b2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
 --- !u!1 &93252052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,6 +1504,7 @@ GameObject:
   - component: {fileID: 794761802}
   - component: {fileID: 794761803}
   - component: {fileID: 794761804}
+  - component: {fileID: 794761805}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -1632,6 +1652,8 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  defaultDuration: 3
+  chillSlowMultiplier: 0.4
 --- !u!114 &794761802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,6 +1689,8 @@ MonoBehaviour:
   onDamageVfxDuration: 0.2
   hitVfxColor: {r: 0.49411765, g: 0.4627451, b: 0.4627451, a: 1}
   hitVfx: {fileID: 1199390444253856412, guid: efe950305ce4a4b479fdf7ed22e232ac, type: 3}
+  critHitVfx: {fileID: 4406482496636585179, guid: b0d9e3f00d97c2d43a918b35f9145099, type: 3}
+  chillVfx: {r: 0.42352942, g: 0.69803923, b: 1, a: 1}
   attackAlert: {fileID: 772655723}
 --- !u!114 &794761804
 MonoBehaviour:
@@ -1681,7 +1705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
   maxHealth:
-    baseValue: 100
+    baseValue: 1000
   major:
     strenght:
       baseValue: 0
@@ -1698,12 +1722,14 @@ MonoBehaviour:
       baseValue: 0
     critChance:
       baseValue: 0
+    armorReduction:
+      baseValue: 0
     fireDamage:
-      baseValue: 0
+      baseValue: 1
     iceDamage:
-      baseValue: 0
+      baseValue: 25
     lightningDamage:
-      baseValue: 0
+      baseValue: 6
   defense:
     armor:
       baseValue: 0
@@ -1715,6 +1741,18 @@ MonoBehaviour:
       baseValue: 0
     lightningRes:
       baseValue: 0
+--- !u!114 &794761805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794761796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3ccd6a1a554944889d35191cc1b2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
 --- !u!1 &795318430
 GameObject:
   m_ObjectHideFlags: 0
@@ -77060,6 +77098,8 @@ MonoBehaviour:
   onDamageVfxDuration: 0.2
   hitVfxColor: {r: 0, g: 0, b: 0, a: 0}
   hitVfx: {fileID: 0}
+  critHitVfx: {fileID: 0}
+  chillVfx: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &1236179227
 GameObject:
   m_ObjectHideFlags: 0
