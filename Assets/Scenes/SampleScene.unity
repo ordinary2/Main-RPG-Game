@@ -279,6 +279,8 @@ MonoBehaviour:
   hitVfx: {fileID: 1199390444253856412, guid: efe950305ce4a4b479fdf7ed22e232ac, type: 3}
   critHitVfx: {fileID: 4406482496636585179, guid: b0d9e3f00d97c2d43a918b35f9145099, type: 3}
   chillVfx: {r: 0.42352942, g: 0.69803923, b: 1, a: 1}
+  burnVfx: {r: 0.9843137, g: 0.27058825, b: 0.14509805, a: 1}
+  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &54919388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,8 +293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a8da0197a54e5429d6de0ee9dc76c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Health
-  currentHp: 0
+  currentHealth: 0
   isDead: 0
+  regenInterval: 1
+  canRegenerateHealth: 1
   knockbackPower: {x: 1.5, y: 2.5}
   heavyKnockbackPower: {x: 7, y: 7}
   knockbackDuration: 0.2
@@ -318,6 +322,9 @@ MonoBehaviour:
     m_Bits: 256
   defaultDuration: 3
   chillSlowMultiplier: 0.2
+  electrifyChargeBuildUp: 0.4
+  fireScale: 0.8
+  lightningScale: 2.5
   counterRecovery: 0.4
 --- !u!114 &54919390
 MonoBehaviour:
@@ -331,8 +338,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6177640fb481b4d4aad208106cf7d60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
-  maxHealth:
-    baseValue: 1000
+  resources:
+    maxHealth:
+      baseValue: 1000
+    healthRegen:
+      baseValue: 40
   major:
     strenght:
       baseValue: 0
@@ -343,20 +353,22 @@ MonoBehaviour:
     vitality:
       baseValue: 0
   offense:
+    attackSpeed:
+      baseValue: 1
     damage:
-      baseValue: 10
-    critPower:
       baseValue: 0
+    critPower:
+      baseValue: 250
     critChance:
-      baseValue: 100
+      baseValue: 60
     armorReduction:
       baseValue: 0
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 10
-    lightningDamage:
       baseValue: 0
+    lightningDamage:
+      baseValue: 50
   defense:
     armor:
       baseValue: 0
@@ -380,6 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3ccd6a1a554944889d35191cc1b2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
+  lightningStrikeVfx: {fileID: 1277608440641861711, guid: b133c00201a7d514e9465655583605d6, type: 3}
+  currentCharge: 0
+  maximumCharge: 1
 --- !u!1 &93252052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,6 +1669,9 @@ MonoBehaviour:
     m_Bits: 128
   defaultDuration: 3
   chillSlowMultiplier: 0.4
+  electrifyChargeBuildUp: 0.4
+  fireScale: 0.8
+  lightningScale: 2.5
 --- !u!114 &794761802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,8 +1684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad404a9c04642574996528f1704ae8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Health
-  currentHp: 0
+  currentHealth: 0
   isDead: 0
+  regenInterval: 1
+  canRegenerateHealth: 1
   knockbackPower: {x: 1.5, y: 2.5}
   heavyKnockbackPower: {x: 7, y: 7}
   knockbackDuration: 0.2
@@ -1691,6 +1711,8 @@ MonoBehaviour:
   hitVfx: {fileID: 1199390444253856412, guid: efe950305ce4a4b479fdf7ed22e232ac, type: 3}
   critHitVfx: {fileID: 4406482496636585179, guid: b0d9e3f00d97c2d43a918b35f9145099, type: 3}
   chillVfx: {r: 0.42352942, g: 0.69803923, b: 1, a: 1}
+  burnVfx: {r: 0.9843137, g: 0.27058825, b: 0.14509805, a: 1}
+  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   attackAlert: {fileID: 772655723}
 --- !u!114 &794761804
 MonoBehaviour:
@@ -1704,8 +1726,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6177640fb481b4d4aad208106cf7d60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
-  maxHealth:
-    baseValue: 1000
+  resources:
+    maxHealth:
+      baseValue: 1000
+    healthRegen:
+      baseValue: 0
   major:
     strenght:
       baseValue: 0
@@ -1716,8 +1741,10 @@ MonoBehaviour:
     vitality:
       baseValue: 0
   offense:
+    attackSpeed:
+      baseValue: 1
     damage:
-      baseValue: 10
+      baseValue: 150
     critPower:
       baseValue: 0
     critChance:
@@ -1725,11 +1752,11 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 1
+      baseValue: 0
     iceDamage:
-      baseValue: 25
+      baseValue: 0
     lightningDamage:
-      baseValue: 6
+      baseValue: 0
   defense:
     armor:
       baseValue: 0
@@ -1753,6 +1780,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3ccd6a1a554944889d35191cc1b2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
+  lightningStrikeVfx: {fileID: 1277608440641861711, guid: b133c00201a7d514e9465655583605d6, type: 3}
+  currentCharge: 0
+  maximumCharge: 1
 --- !u!1 &795318430
 GameObject:
   m_ObjectHideFlags: 0
@@ -77100,6 +77130,8 @@ MonoBehaviour:
   hitVfx: {fileID: 0}
   critHitVfx: {fileID: 0}
   chillVfx: {r: 0, g: 1, b: 1, a: 1}
+  burnVfx: {r: 1, g: 0, b: 0, a: 1}
+  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1236179227
 GameObject:
   m_ObjectHideFlags: 0
