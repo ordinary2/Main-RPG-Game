@@ -32,18 +32,18 @@ public class Entity_Combat : MonoBehaviour
         foreach (var target in GetDetectedColliders())
         {
             IDamagable damagable = target.GetComponent<IDamagable>();
-            
+
             if(damagable == null)
                 continue;
 
             float elementalDamage = stats.GetElementalDamage(out ElementType element, .6f);
             float damage = stats.GetPhysicalDamage(out bool isCrit);
-            
+
             bool targetGotHit = damagable.TakeDamage(damage, elementalDamage, element, transform);
 
             if (element != ElementType.None)
                 ApplyStatusEffect(target.transform, element);
-            
+
             if (targetGotHit)
             {
                 vfx.UpdateOnHitColor(element);
