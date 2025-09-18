@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cab583af323ae4fa176381f55245f7, type: 3}
+  m_Name: Skill data - Time lost shard
+  m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
+  cost: 2
+  skillType: 0
+  upgradeData:
+    upgradeType: 3
+    cooldown: 3
+  displayName: Time lost shard
+  description: 'Create a time shard before you dash.
+
+    (Inherits all upgrades
+    of Time shard Ability)'
+  icon: {fileID: -57684708, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}
