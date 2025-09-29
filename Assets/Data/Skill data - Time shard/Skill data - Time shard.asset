@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14cab583af323ae4fa176381f55245f7, type: 3}
-  m_Name: Skill data - Echo step
+  m_Name: Skill data - Time shard
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
-  cost: 2
+  cost: 0
   unlockedByDefault: 0
-  skillType: 0
+  skillType: 2
   upgradeData:
-    upgradeType: 2
-    cooldown: 3
+    upgradeType: 6
+    cooldown: 1
     damageScaleData:
       phyiscal: 1
       elemental: 1
@@ -28,9 +28,9 @@ MonoBehaviour:
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
-  displayName: Echo step
-  description: 'Create a time echo before you dash.
+  displayName: Time shard
+  description: 'Create a time shard filled with elemental magic.
 
-    (Inherits all upgrades of
-    Time echo Ability)'
-  icon: {fileID: 219135811, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}
+    The shard explodes
+    when touched by an enemy or when time goes up.'
+  icon: {fileID: 253346517, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}

@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14cab583af323ae4fa176381f55245f7, type: 3}
-  m_Name: Skill data - Quick dash
+  m_Name: Skill data - Vital Anchor
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
-  cost: 0
-  unlockedByDefault: 1
-  skillType: 0
+  cost: 3
+  unlockedByDefault: 0
+  skillType: 2
   upgradeData:
-    upgradeType: 1
-    cooldown: 3
-  displayName: Quick dash
-  description: 'Dash to avoid attacks.
-
-    You cannot take damage while dashing.'
-  icon: {fileID: -1637669427, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}
+    upgradeType: 10
+    cooldown: 4
+  displayName: Vital Anchor
+  description: When you swap places with the Time Shard, your health reverts to the
+    amount you had when the Time Shard was created
+  icon: {fileID: -1976569751, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}
