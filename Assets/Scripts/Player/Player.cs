@@ -25,6 +25,7 @@ public class Player : Entity
     public Player_DeadState deadState { get; private set; }
     public Player_CounterAttackState CounterAttackState { get; private set; }
     public Player_SwordThrowState swordThrowState { get; private set; }
+    public Player_DomainExpansionState domainExpansionState { get; private set; }
     #endregion
     
     [Header("Attack details")]
@@ -33,6 +34,10 @@ public class Player : Entity
     public float attackVelocityDuration = .1f;
     public float comboResetTime = 1;
     private Coroutine queuedAttackCo;
+    
+    [Header("Ultimate ability details")]
+    public float riseSpeed = 25;
+    public float riseMaxDistance = 3;
 
     [Header("Movement details")] 
     public float moveSpeed;
@@ -72,7 +77,7 @@ public class Player : Entity
         deadState = new Player_DeadState(this, stateMachine, "dead");
         CounterAttackState = new Player_CounterAttackState(this, stateMachine, "counterAttack");
         swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
-
+        domainExpansionState = new Player_DomainExpansionState(this, stateMachine, "jumpFall");
     }
 
     protected override void Start()
@@ -153,7 +158,9 @@ public class Player : Entity
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
 
         input.Player.ToggleSkillTreeUI.performed += ctx => ui.ToggleSkillTreeUI();
+        
         input.Player.Spell.performed += ctx => skillManager.shard.TryUseSkill();
+        input.Player.Spell.performed += ctx => skillManager.timeEcho.TryUseSkill();
     }
 
     private void OnDisable()
