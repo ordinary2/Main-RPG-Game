@@ -1,7 +1,9 @@
+using System;
 using System.Diagnostics;
 using UnityEditor.Rendering;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class Entity_Stats : MonoBehaviour
 {
@@ -11,6 +13,13 @@ public class Entity_Stats : MonoBehaviour
     public Stat_OffenseGroup offense;
     public Stat_DefenseGroup defense;
     public Stat_MajorGroup major;
+
+    
+
+    protected virtual void Awake()
+    {
+        
+    }
 
     public AttackData GetAttackData(DamageScaleData scaleData)
     {
@@ -82,29 +91,23 @@ public class Entity_Stats : MonoBehaviour
     
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
-        float baseDamage = offense.damage.GetValue();
-        float bonusDamage = major.strength.GetValue();
-        float totalBaseDamage = baseDamage + bonusDamage;
-        
-        float baseCritChance = offense.critChance.GetValue();
-        float bonusCritChance = major.agility.GetValue() * .3f; // Boonus crit chance from Agility: +0.3% per AGI
-        float critChance = baseCritChance + bonusCritChance;
-        
-        float baseCritPower = offense.critPower.GetValue();
-        float bonusCritPower = major.strength.GetValue() * .5f; // Bonus crit chance from Strength: +0.5% per STR
-        float critPower = (baseCritPower + bonusCritPower) / 100; // Total crit power as multiplier
+        float baseDamage = GetBaseDamage();
+        float critChance = GetCritChance();
+        float critPower = GetCritPower() / 100; // Total crit power as multiplier
         
         isCrit = Random.Range(0, 100) < critChance;
-        float finalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
+        float finalDamage = isCrit ? baseDamage * critPower : baseDamage;
         
         return finalDamage * scaleFactor;
     }
+    
+    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // Bonus damage from Strength: +1 per STR
+    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * .3f); // Boonus crit chance from Agility: +0.3% per AGI
+    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * .5f); // Bonus crit chance from Strength: +0.5% per STR
 
     public float GetArmorMitigation(float armorReduction)
     {
-     float baseArmor = defense.armor.GetValue();
-     float bonusArmor = major.vitality.GetValue(); // Bonus armor from Vitality: +1 per VIT
-     float totalArmor = baseArmor + bonusArmor;
+     float totalArmor = GetBaseArmor();
      
      float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1 ); // 1 - .4f = .6f
      float effectiveArmor = totalArmor * reductionMultiplier;
@@ -116,6 +119,8 @@ public class Entity_Stats : MonoBehaviour
      
      return finalMitigation;
     }
+
+    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // Bonus armor from Vitality: +1 per VIT
 
     public float GetArmorReduction()
     {

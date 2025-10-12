@@ -45,7 +45,7 @@ public class SkillObject_Base : MonoBehaviour
 
             if (targetGotHit)
             {
-                lastTarget = target.transform;
+                lastTarget = target.transform; 
                 Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
             }
            
