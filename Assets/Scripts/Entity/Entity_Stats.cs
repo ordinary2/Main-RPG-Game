@@ -182,8 +182,8 @@ public class Entity_Stats : MonoBehaviour
             case StatType.LightningResistance: return defense.lightningRes;
 
             default:
-            Debug.Log($"StatType {type} not implemented yes.");
-            return null;
+                Debug.Log($"StatType {type} not implemented yes.");
+                return null;
         }
     }
 

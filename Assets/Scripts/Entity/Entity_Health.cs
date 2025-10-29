@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class Entity_Health : MonoBehaviour , IDamagable
 {
     public event Action OnTakingDamage;
+    public event Action OnHealthUpdate;
     
     private Slider healthBar;
     private Entity entity;
@@ -13,6 +14,7 @@ public class Entity_Health : MonoBehaviour , IDamagable
     private Entity_Stats entityStats;
     private Entity_DropManager dropManager;
 
+    private bool miniHealthBarActive;
     [SerializeField] protected float currentHealth;
     [Header("Health regen")]
     [SerializeField] private float regenInterval = 1;
@@ -47,6 +49,8 @@ public class Entity_Health : MonoBehaviour , IDamagable
             return;
         
         currentHealth = entityStats.GetMaxHealth();
+        OnHealthUpdate += UpdateHealthBar;
+        
         UpdateHealthBar();
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
@@ -109,14 +113,15 @@ public class Entity_Health : MonoBehaviour , IDamagable
         float maxHealth = entityStats.GetMaxHealth();
         
         currentHealth = Mathf.Min(newHealth, maxHealth);
-        UpdateHealthBar();
+        OnHealthUpdate?.Invoke();
     }
     
     public void ReduceHealth(float damage)
     {
-        entityVfx?.PlayOnDamageVfx();
         currentHealth = currentHealth - damage;
-        UpdateHealthBar();
+        
+        entityVfx?.PlayOnDamageVfx();
+        OnHealthUpdate?.Invoke();
 
         if (currentHealth <= 0)
             Die();
@@ -134,16 +139,20 @@ public class Entity_Health : MonoBehaviour , IDamagable
     public void SetHealthToPercent(float percent)
     {
         currentHealth = entityStats.GetMaxHealth() * Mathf.Clamp01(percent);
-        UpdateHealthBar();
+        OnHealthUpdate?.Invoke();
     }
+
+    public float GetCurrentHealth() => currentHealth;
 
     private void UpdateHealthBar()
     {
-        if(healthBar == null)
+        if(healthBar == null && healthBar.transform.parent.gameObject.activeSelf == false)
             return;
         
         healthBar.value = currentHealth / entityStats.GetMaxHealth();
     }
+    
+    public void EnableHealthBar(bool enable) => healthBar?.transform.parent.gameObject.SetActive(enable);
     
     private void TakeKnockback(Transform damageDealer, float finalDamage)
     {
