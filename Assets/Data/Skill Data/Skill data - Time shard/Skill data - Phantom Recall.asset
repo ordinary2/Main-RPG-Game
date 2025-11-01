@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Phantom Recall
   description: Press skill button again, to change places with shard you created;
   icon: {fileID: -652594250, guid: 8dc442b41087fef47a8f9fa26e298035, type: 3}
-  cost: 0
+  cost: 2
   unlockedByDefault: 0
   skillType: 2
   upgradeData:

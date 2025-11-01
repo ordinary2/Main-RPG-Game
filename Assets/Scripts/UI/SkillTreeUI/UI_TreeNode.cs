@@ -82,6 +82,14 @@ public class UI_TreeNode : MonoBehaviour , IPointerEnterHandler , IPointerExitHa
         //skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData);
     }
 
+    public void UnlockWithSaveData()
+    {
+        isUnlocked = true;
+        UpdateIconColor(Color.white);
+        LockConflictNodes();
+        connectHandler.UnlockConnectionImage(true);
+    }
+
     private bool CanBeUnlocked()
     {
         if (isLocked || isUnlocked)
