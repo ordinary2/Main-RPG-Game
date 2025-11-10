@@ -12764,6 +12764,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_Options
   healthBarToggle: {fileID: 4973228943461492976}
+  audioMixer: {fileID: 24100000, guid: c522acccee5b8d146a130b6a070267b2, type: 2}
+  mixerMultiplier: 25
+  bgmSlider: {fileID: 89309503056735791}
+  bgmParameter: bgmMixer
+  sfxSlider: {fileID: 7862458315588952828}
+  sfxParameter: sfxMixer
 --- !u!222 &488611662815035265
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48928,7 +48934,7 @@ GameObject:
   - component: {fileID: 7099876815870975428}
   - component: {fileID: 89309503056735791}
   m_Layer: 5
-  m_Name: BGM_Volume
+  m_Name: BGM_Volume - Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49000,13 +49006,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1517709186049699697}
   m_HandleRect: {fileID: 5899940704142142722}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0.594
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6271384824453614762}
+        m_TargetAssemblyTypeName: UI_Options, Assembly-CSharp
+        m_MethodName: BGMSliderValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5593319330700926517
 GameObject:
   m_ObjectHideFlags: 0
@@ -49792,7 +49810,7 @@ GameObject:
   - component: {fileID: 8603751954503862280}
   - component: {fileID: 4973228943461492976}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: HealthBar - Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62593,7 +62611,7 @@ GameObject:
   - component: {fileID: 7228669822888795519}
   - component: {fileID: 7862458315588952828}
   m_Layer: 5
-  m_Name: SFX_Volume
+  m_Name: SFX_Volume - Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62665,13 +62683,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1221250969890269954}
   m_HandleRect: {fileID: 8872296222094643747}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0.594
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6271384824453614762}
+        m_TargetAssemblyTypeName: UI_Options, Assembly-CSharp
+        m_MethodName: SFXSliderValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7265441611188898549
 GameObject:
   m_ObjectHideFlags: 0
