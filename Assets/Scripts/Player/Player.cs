@@ -15,6 +15,7 @@ public class Player : Entity
     public Player_Combat combat { get; private set; }
     public Inventory_Player inventory { get; private set; }
     public Player_Stats stats { get; private set; }
+    public Player_QuestManager questManager { get; private set; }
     
     #region State Variables
     public Player_IdleState idleState { get; private set; }
@@ -70,6 +71,7 @@ public class Player : Entity
         combat = GetComponent<Player_Combat>();
         inventory = GetComponent<Inventory_Player>();
         stats =  GetComponent<Player_Stats>();
+        questManager = GetComponent<Player_QuestManager>();
 
         input = new PlayerInputSet();
         ui.SetupControlsUI(input);

@@ -1332,6 +1332,7 @@ MonoBehaviour:
   groundCheck: {fileID: 1143189633622584471}
   primaryWallCheck: {fileID: 9177459190126973272}
   secondaryWallCheck: {fileID: 0}
+  questTargetId: enemy_skeleton
   battleMoveSpeed: 3
   attackDistance: 2
   battleTimeDuration: 5
@@ -1496,7 +1497,7 @@ MonoBehaviour:
   defaultStatSetup: {fileID: 11400000, guid: a3308f9eecb66234fb2872b3e26ec5e0, type: 2}
   resources:
     maxHealth:
-      baseValue: 1500
+      baseValue: 5
       modifiers: []
     healthRegen:
       baseValue: 0
