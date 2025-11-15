@@ -24,7 +24,7 @@ public class UI_ToolTip : MonoBehaviour
 
     public void UpdatePosition(RectTransform targetRect)
     {
-        float screenCenterX = Screen.width / 2;
+        float screenCenterX = Screen.width / 2f;
         float screenTop = Screen.height;
         float screenBottom = 0;
 

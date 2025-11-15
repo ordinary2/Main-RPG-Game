@@ -24,6 +24,7 @@ public class UI : MonoBehaviour
     public UI_DeathScreen deathScreenUI { get; private set; }
     public UI_FadeScreen fadeScreenUI { get; private set; }
     public UI_Quest questUI { get; private set; }
+    public UI_Dialogue dialogueUI { get; private set; }
     #endregion
     
     private bool skillTreeEnabled;
@@ -47,6 +48,7 @@ public class UI : MonoBehaviour
         deathScreenUI = GetComponentInChildren<UI_DeathScreen>(true);
         fadeScreenUI = GetComponentInChildren<UI_FadeScreen>(true);
         questUI = GetComponentInChildren<UI_Quest>(true);
+        dialogueUI = GetComponentInChildren<UI_Dialogue>(true);
         
         skillTreeEnabled = skillTreeUI.gameObject.activeSelf;
         inventoryEnabled = inventoryUI.gameObject.activeSelf;
@@ -81,6 +83,20 @@ public class UI : MonoBehaviour
 
             Time.timeScale = 0;
             OpenOptionsUI();
+        };
+
+        input.UI.DialogueInteraction.performed += ctx =>
+        {
+            if (dialogueUI.gameObject.activeInHierarchy)
+                dialogueUI.DialogueInteraction();
+        };
+
+        input.UI.DialogueNavigation.performed += ctx =>
+        {
+            int direction = Mathf.RoundToInt(ctx.ReadValue<float>());
+
+            if (dialogueUI.gameObject.activeInHierarchy)
+                dialogueUI.NavigateChoice(direction);
         };
     }
 
@@ -163,6 +179,16 @@ public class UI : MonoBehaviour
         StopPlayerControls(inventoryEnabled);
     }
 
+    public void OpenDialogueUI(DialogueLineSO firstLine, DialogueNpcData npcData)
+    {
+        StopPlayerControls(true);
+        HideAllToolTips();
+        
+        dialogueUI.gameObject.SetActive(true);
+        dialogueUI.SetupNpcData(npcData);
+        dialogueUI.PlayDialogueLine(firstLine);
+    }
+
     public void OpenQuestUI(QuestDataSO[] questsToShow)
     {
         StopPlayerControls(true);
@@ -180,6 +206,18 @@ public class UI : MonoBehaviour
         if (openStorageUI == false)
         {
             craftUI.gameObject.SetActive(false);
+            HideAllToolTips();
+        }
+    }
+    
+    public void OpenCraftUI(bool openStorageUI)
+    {
+        craftUI.gameObject.SetActive(openStorageUI);
+        StopPlayerControls(openStorageUI);
+
+        if (openStorageUI == false)
+        {
+            storageUI.gameObject.SetActive(false);
             HideAllToolTips();
         }
     }
